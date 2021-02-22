@@ -110,75 +110,117 @@ int main()
 	std::getline(frame3, line3);
 	std::getline(frame4, line4);
 	std::getline(frame5, line5);
-	
+
+	std::vector<std::fstream*> frames;
+	frames.push_back(&frame1);
+	frames.push_back(&frame2);
+	frames.push_back(&frame3);
+	frames.push_back(&frame4);
+	frames.push_back(&frame5);
+	std::vector<std::string> lines = {line1, line2, line3, line4, line5};
+
 	while (1)
 	{
-		if (line1.empty() && line2.empty() && line3.empty()
-			&& line4.empty() && line5.empty())
+		std::vector<int> vec(5);
+		bool empty = true;
+
+		for (int i = 0; i < lines.size(); ++i)
+		{
+			if (lines[i].empty())
+			{
+				vec[i] = 100000;
+			}
+			else
+			{
+				vec[i] = std::stoi(lines[i]);
+				empty = false;
+			}
+		}
+		
+		if (empty)
 		{
 			break;
 		}
-		
-		int f1;
-		int f2;
-		int f3;
-		int f4;
-		int f5;
-		if (line1.empty())
-			f1 = 100000;
-		else
-			f1 = std::stoi(line1);
-		if (line2.empty())
-			f2 = 100000;
-		else
-			f2 = std::stoi(line2);
-		if (line3.empty())
-			f3 = 100000;
-		else
-			f3 = std::stoi(line3);
-		if (line4.empty())
-			f4 = 100000;
-		else
-			f4 = std::stoi(line4);
-		if (line5.empty())
-			f5 = 100000;
-		else
-			f5 = std::stoi(line5);
 
-		if (f1 <= f2 && f1 <= f3 && f1 <= f4 && f1 <= f5)
+		int min_ind = 0;
+		int min_val = vec[0];
+		for (int i = 1; i < 5; ++i)
 		{
-			res << f1 << "\n";
-			std::getline(frame1, line1);
-			continue;
+			if (vec[i] < min_val)
+			{
+				min_val = vec[i];
+				min_ind = i;
+			}
 		}
+		res << min_val << "\n";
+		std::getline(*frames[min_ind], lines[min_ind]);
 
-		if (f2 <= f1 && f2 <= f3 && f2 <= f4 && f2 <= f5)
-		{
-			res << f2 << "\n";
-			std::getline(frame2, line2);
-			continue;
-		}
+		//if (line1.empty() && line2.empty() && line3.empty()
+		//	&& line4.empty() && line5.empty())
+		//{
+		//	break;
+		//}
 
-		if (f3 <= f2 && f3 <= f1 && f3 <= f4 && f3 <= f5)
-		{
-			res << f3 << "\n";
-			std::getline(frame3, line3);
-			continue;
-		}
-
-		if (f4 <= f2 && f4 <= f3 && f4 <= f1 && f4 <= f5)
-		{
-			res << f4 << "\n";
-			std::getline(frame4, line4);
-			continue;
-		}
-
-		if (f5 <= f2 && f5 <= f3 && f5 <= f4 && f5 <= f1)
-		{
-			res << f5 << "\n";
-			std::getline(frame5, line5);
-			continue;
-		}
+		//int f1;
+		//int f2;
+		//int f3;
+		//int f4;
+		//int f5;
+		//if (line1.empty())
+		//	f1 = 100000;
+		//else
+		//	f1 = std::stoi(line1);
+		//if (line2.empty())
+		//	f2 = 100000;
+		//else
+		//	f2 = std::stoi(line2);
+		//if (line3.empty())
+		//	f3 = 100000;
+		//else
+		//	f3 = std::stoi(line3);
+		//if (line4.empty())
+		//	f4 = 100000;
+		//else
+		//	f4 = std::stoi(line4);
+		//if (line5.empty())
+		//	f5 = 100000;
+		//else
+		//	f5 = std::stoi(line5);
+		//
+		//if (f1 <= f2 && f1 <= f3 && f1 <= f4 && f1 <= f5)
+		//{
+		//	res << f1 << "\n";
+		//	std::getline(frame1, line1);
+		//	continue;
+		//}
+		//
+		//if (f2 <= f1 && f2 <= f3 && f2 <= f4 && f2 <= f5)
+		//{
+		//	res << f2 << "\n";
+		//	std::getline(frame2, line2);
+		//	continue;
+		//}
+		//
+		//if (f3 <= f2 && f3 <= f1 && f3 <= f4 && f3 <= f5)
+		//{
+		//	res << f3 << "\n";
+		//	std::getline(frame3, line3);
+		//	continue;
+		//}
+		//
+		//if (f4 <= f2 && f4 <= f3 && f4 <= f1 && f4 <= f5)
+		//{
+		//	res << f4 << "\n";
+		//	std::getline(frame4, line4);
+		//	continue;
+		//}
+		//
+		//if (f5 <= f2 && f5 <= f3 && f5 <= f4 && f5 <= f1)
+		//{
+		//	res << f5 << "\n";
+		//	std::getline(frame5, line5);
+		//	continue;
+		//}
 	}
 
 	res.close();
